@@ -135,7 +135,10 @@ NSDictionary *parseTrustKitConfiguration(NSDictionary *trustKitArguments)
         {
             // Convert the string in the yyyy-MM-dd format into an actual date
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-            [dateFormat setDateFormat:@"yyyy-MM-dd"];
+
+            dateFormat.dateFormat = @"yyyy-MM-dd";
+            dateFormat.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+            [dateFormat setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
             NSDate *expirationDate = [dateFormat dateFromString:expirationDateStr];
             domainFinalConfiguration[kTSKExpirationDate] = expirationDate;
         }

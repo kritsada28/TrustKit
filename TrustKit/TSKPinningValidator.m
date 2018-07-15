@@ -107,9 +107,23 @@
         // This domain has a pinning policy
         NSDictionary *domainConfig = self.domainPinningPolicies[domainConfigKey];
         
+
         // Has the pinning policy expired?
+
+//get current date with fix calendar
+                NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+                NSDateComponents* components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[NSDate date]];
+        
+                [components setHour: 0];
+                [components setMinute: 0];
+                [components setSecond: 0];
+                NSDate *todayDate = [calendar dateFromComponents:components];
+
+        NSLog(@" ExDate %@",expirationDate);
+        NSLog(@" Date %@",todayDate);
+
         NSDate *expirationDate = domainConfig[kTSKExpirationDate];
-        if (expirationDate != nil && [expirationDate compare:[NSDate date]] == NSOrderedAscending)
+        if (expirationDate != nil && [expirationDate compare:todayDate] == NSOrderedAscending)
         {
             // Yes the policy has expired
             finalTrustDecision = TSKTrustDecisionDomainNotPinned;
