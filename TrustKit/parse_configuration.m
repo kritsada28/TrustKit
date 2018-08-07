@@ -136,7 +136,6 @@ NSDictionary *parseTrustKitConfiguration(NSDictionary *trustKitArguments)
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
             dateFormat.dateFormat = @"yyyy-MM-dd";
             dateFormat.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-            [dateFormat setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
             NSDate *expirationDate = [dateFormat dateFromString:expirationDateStr];
             domainFinalConfiguration[kTSKExpirationDate] = expirationDate;
         }
