@@ -133,9 +133,14 @@ NSDictionary *parseTrustKitConfiguration(NSDictionary *trustKitArguments)
         if (expirationDateStr != nil)
         {
             // Convert the string in the yyyy-MM-dd format into an actual date in UTC
+            NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+            
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-            dateFormat.dateFormat = @"yyyy-MM-dd";
+            [dateFormat setDateFormat:@"yyyy-MM-dd"];
+            // Set calendar for convert date if user device not gregorian.
+            dateFormat.calendar = gregorianCalendar;
             dateFormat.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+            
             NSDate *expirationDate = [dateFormat dateFromString:expirationDateStr];
             domainFinalConfiguration[kTSKExpirationDate] = expirationDate;
         }
